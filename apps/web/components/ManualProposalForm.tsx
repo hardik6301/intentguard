@@ -14,7 +14,7 @@ function rupees(amount: number): string {
 }
 
 const inputClass =
-  "min-h-11 w-full rounded-[1.25rem] border border-hairline bg-raised px-4 text-base text-ink outline-none placeholder:text-muted focus:ring-2 focus:ring-teal";
+  "min-h-11 w-full rounded-[1.25rem] border border-hairline bg-raised px-4 text-base text-ink outline-none placeholder:text-muted focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 focus-visible:ring-offset-canvas";
 
 type ManualProposalFormProps = {
   intentId: string;
@@ -135,8 +135,8 @@ export function ManualProposalForm({
         <button
           type="button"
           onClick={() => setAddAccessory((value) => !value)}
-          className={`inline-flex min-h-11 w-fit items-center rounded-full border px-4 text-sm transition-transform duration-500 ease-intent active:scale-[0.98] ${
-            addAccessory ? "border-teal/50 bg-teal/15 text-teal" : "border-hairline text-muted"
+          className={`inline-flex min-h-11 w-fit cursor-pointer items-center rounded-full border px-4 text-sm transition-[color,background-color,transform] duration-200 ease-intent active:scale-[0.98] ${
+            addAccessory ? "border-teal/50 bg-teal/15 text-teal" : "border-hairline text-muted hover:text-ink"
           }`}
         >
           {addAccessory ? "Accessory line on" : "Add ₹10,000 accessory line"}

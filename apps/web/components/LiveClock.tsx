@@ -6,6 +6,9 @@ export function LiveClock() {
   const [now, setNow] = useState(() => new Date());
 
   useEffect(() => {
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      return;
+    }
     const timer = window.setInterval(() => setNow(new Date()), 1000);
     return () => window.clearInterval(timer);
   }, []);

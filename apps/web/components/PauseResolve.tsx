@@ -3,6 +3,7 @@
 import { useState } from "react";
 
 import { PrimaryButton } from "@/components/PrimaryButton";
+import { SecondaryButton } from "@/components/SecondaryButton";
 import { ApiError, resolvePause, type ProposalEvaluation } from "@/lib/api";
 
 type PauseResolveProps = {
@@ -32,14 +33,13 @@ export function PauseResolve({ decisionId, onResolved }: PauseResolveProps) {
         <PrimaryButton onClick={() => void onAction("confirm")} disabled={busy !== null}>
           {busy === "confirm" ? "Confirming" : "Confirm"}
         </PrimaryButton>
-        <button
-          type="button"
+        <SecondaryButton
+          tone="block"
           onClick={() => void onAction("reject")}
           disabled={busy !== null}
-          className="inline-flex min-h-11 items-center rounded-full border border-hairline px-6 py-3 text-sm text-block transition-transform duration-500 ease-intent active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40"
         >
           {busy === "reject" ? "Rejecting" : "Reject"}
-        </button>
+        </SecondaryButton>
       </div>
       {error ? <p className="text-sm text-block">{error}</p> : null}
     </div>

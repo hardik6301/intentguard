@@ -8,6 +8,7 @@ import { ContractPreview } from "@/components/ContractPreview";
 import { Eyebrow } from "@/components/Eyebrow";
 import { FailureInject, InjectChip } from "@/components/FailureInject";
 import { PrimaryButton } from "@/components/PrimaryButton";
+import { SecondaryButton } from "@/components/SecondaryButton";
 import { ApiError, compileIntent, confirmIntent } from "@/lib/api";
 import type { IntentContract } from "@/lib/schemas";
 
@@ -65,6 +66,7 @@ export function CreateIntentForm() {
   }
 
   const canCompile = rawRequest.trim().length > 0 && !compiling && !confirming;
+  const hasDraft = Boolean(intentId && contract);
 
   return (
     <main className="grid grid-cols-1 gap-8 md:grid-cols-12 md:gap-10">
@@ -93,7 +95,7 @@ export function CreateIntentForm() {
             onChange={(event) => setRawRequest(event.target.value)}
             rows={10}
             placeholder="Buy me a lightweight programming laptop under ₹60,000"
-            className="min-h-[10rem] w-full resize-y rounded-[1.25rem] border border-hairline bg-raised px-4 py-3 text-base leading-relaxed text-ink outline-none placeholder:text-muted focus:ring-2 focus:ring-teal"
+            className="min-h-[10rem] w-full resize-y rounded-[1.25rem] border border-hairline bg-raised px-4 py-3 text-base leading-relaxed text-ink outline-none placeholder:text-muted focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 focus-visible:ring-offset-canvas"
           />
           {error ? <p className="text-sm text-block">{error}</p> : null}
           {errorDetails.length > 0 ? (
@@ -107,12 +109,25 @@ export function CreateIntentForm() {
           ) : null}
         </div>
         <div className="flex flex-wrap gap-3">
-          <PrimaryButton onClick={onCompile} disabled={!canCompile}>
-            {compiling ? "Compiling" : "Compile intent"}
-          </PrimaryButton>
-          <PrimaryButton onClick={onConfirm} disabled={!intentId || confirming || compiling}>
-            {confirming ? "Confirming" : "Confirm contract"}
-          </PrimaryButton>
+          {hasDraft ? (
+            <>
+              <PrimaryButton onClick={onConfirm} disabled={confirming || compiling}>
+                {confirming ? "Confirming" : "Confirm contract"}
+              </PrimaryButton>
+              <SecondaryButton onClick={onCompile} disabled={!canCompile}>
+                {compiling ? "Compiling" : "Compile again"}
+              </SecondaryButton>
+            </>
+          ) : (
+            <>
+              <PrimaryButton onClick={onCompile} disabled={!canCompile}>
+                {compiling ? "Compiling" : "Compile intent"}
+              </PrimaryButton>
+              <SecondaryButton onClick={onConfirm} disabled>
+                Confirm contract
+              </SecondaryButton>
+            </>
+          )}
         </div>
         <FailureInject>
           <p className="max-w-[65ch] text-sm leading-relaxed text-muted">

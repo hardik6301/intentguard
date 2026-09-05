@@ -3,6 +3,7 @@
 import { useEffect, useMemo, useState } from "react";
 
 import { PrimaryButton } from "@/components/PrimaryButton";
+import { SecondaryButton } from "@/components/SecondaryButton";
 import {
   ApiError,
   confirmCheckout,
@@ -169,14 +170,9 @@ export function PaymentPanel({ grant, payment: initial }: PaymentPanelProps) {
           Payment status is unknown. Reconcile before any retry. IntentGuard will not create a second
           charge for this grant.
         </p>
-        <button
-          type="button"
-          onClick={onReconcile}
-          disabled={busy}
-          className="inline-flex min-h-11 w-fit items-center rounded-full border border-hairline px-6 py-3 text-sm text-ink transition-transform duration-500 ease-intent active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40"
-        >
+        <SecondaryButton onClick={onReconcile} disabled={busy}>
           {busy ? "Reconciling" : "Reconcile status"}
-        </button>
+        </SecondaryButton>
         {error ? <p className="text-sm text-block">{error}</p> : null}
       </div>
     );
@@ -206,14 +202,9 @@ export function PaymentPanel({ grant, payment: initial }: PaymentPanelProps) {
         <p className="max-w-[65ch] text-sm leading-relaxed text-muted">
           The order is pending. Reconcile status. IntentGuard will not mint a second grant.
         </p>
-        <button
-          type="button"
-          onClick={onReconcile}
-          disabled={busy}
-          className="inline-flex min-h-11 w-fit items-center rounded-full border border-hairline px-6 py-3 text-sm text-ink transition-transform duration-500 ease-intent active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40"
-        >
+        <SecondaryButton onClick={onReconcile} disabled={busy}>
           {busy ? "Reconciling" : "Reconcile status"}
-        </button>
+        </SecondaryButton>
         {error ? <p className="text-sm text-block">{error}</p> : null}
       </div>
     );
@@ -259,14 +250,9 @@ export function PaymentPanel({ grant, payment: initial }: PaymentPanelProps) {
             ? "Create test order"
             : "Initiate payment"}
       </PrimaryButton>
-      <button
-        type="button"
-        onClick={() => void onTimeout()}
-        disabled={busy}
-        className="inline-flex min-h-11 w-fit items-center rounded-full border border-hairline px-6 py-3 text-sm text-muted transition-transform duration-500 ease-intent active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40"
-      >
+      <SecondaryButton onClick={() => void onTimeout()} disabled={busy}>
         {busy ? "Simulating timeout" : "Simulate timeout"}
-      </button>
+      </SecondaryButton>
       {error ? <p className="text-sm text-block">{error}</p> : null}
     </div>
   );

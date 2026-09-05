@@ -3,5 +3,5 @@ type SkeletonProps = {
 };
 
 export function Skeleton({ className }: SkeletonProps) {
-  return <div className={`animate-shimmer rounded-lg bg-raised ${className ?? ""}`} />;
+  return <div className={`rounded-lg bg-raised motion-safe:animate-shimmer ${className ?? ""}`} />;
 }

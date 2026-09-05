@@ -102,9 +102,17 @@ export function AuditTimeline({ intentId }: AuditTimelineProps) {
 
   if (events.length === 0) {
     return (
-      <p className="max-w-[65ch] text-sm leading-relaxed text-muted">
-        No events yet. Compile an intent to start the trail.
-      </p>
+      <ol className="flex flex-col">
+        <li className="grid grid-cols-[7rem_1fr] gap-6 border-l border-hairline py-5 pl-6">
+          <span className="font-mono text-sm tracking-[0.04em] text-faint">--:--:--</span>
+          <div className="flex flex-col gap-1">
+            <p className="text-sm leading-relaxed text-ink">Waiting for the first event</p>
+            <p className="max-w-[65ch] text-sm leading-relaxed text-muted">
+              Compile an intent on Create. The trail starts when the contract is hashed.
+            </p>
+          </div>
+        </li>
+      </ol>
     );
   }
 
@@ -135,8 +143,11 @@ export function AuditPageBody({ intentId }: { intentId: string }) {
       <div className="flex flex-col gap-3">
         <Eyebrow>Audit trail</Eyebrow>
         <h1 className="text-[clamp(1.75rem,3vw,2.75rem)] font-medium leading-none tracking-[-0.04em]">
-          Events appear in order
+          Authorization log
         </h1>
+        <p className="max-w-[65ch] text-base leading-[1.55] text-muted">
+          Oldest event at the top. Amounts, scores, and timestamps stay in mono.
+        </p>
         <div className="flex flex-wrap items-center gap-4">
           <p className="font-mono text-sm tracking-[0.04em] text-faint">{intentId}</p>
           <LiveClock />

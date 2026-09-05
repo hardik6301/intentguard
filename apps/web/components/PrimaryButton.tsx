@@ -17,11 +17,11 @@ export function PrimaryButton({
     <button
       type={type}
       disabled={disabled}
-      className="inline-flex min-h-11 items-center gap-3 rounded-full bg-teal px-6 py-3 text-sm font-medium text-ink transition-transform duration-500 ease-intent hover:brightness-110 active:scale-[0.98] disabled:pointer-events-none disabled:opacity-40"
+      className="group inline-flex min-h-11 cursor-pointer items-center gap-3 rounded-full bg-teal px-6 py-3 text-sm font-medium text-ink transition-[transform,filter] duration-200 ease-intent hover:brightness-110 active:scale-[0.98] focus-visible:ring-2 focus-visible:ring-teal focus-visible:ring-offset-2 focus-visible:ring-offset-canvas disabled:pointer-events-none disabled:cursor-not-allowed disabled:bg-raised disabled:text-faint disabled:ring-1 disabled:ring-hairline disabled:brightness-100"
       {...props}
     >
       {children}
-      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black/20">
+      <span className="flex h-8 w-8 items-center justify-center rounded-full bg-black/20 group-disabled:bg-white/5">
         <ArrowRight size={16} weight="regular" />
       </span>
     </button>

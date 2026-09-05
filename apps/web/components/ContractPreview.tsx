@@ -59,10 +59,27 @@ export function ContractPreview({ contract, status, loading, error }: ContractPr
       ) : null}
 
       {!loading && !contract && !error ? (
-        <p className="max-w-[65ch] text-sm leading-relaxed text-muted">
-          Hard constraints and preferences appear after compile. The agent cannot change this
-          contract once you confirm it.
-        </p>
+        <div className="flex flex-col gap-6">
+          <p className="max-w-[65ch] text-sm leading-relaxed text-muted">
+            Compile the task to fill this contract. The agent cannot change it after you confirm.
+          </p>
+          <div>
+            <p className="mb-2 text-[10px] font-medium uppercase tracking-[0.18em] text-muted">
+              Hard constraints
+            </p>
+            <dl className="divide-y divide-hairline">
+              <Row index={0} label="Max amount" value="—" />
+              <Row index={1} label="Currency" value="—" />
+              <Row index={2} label="Category" value="—" />
+            </dl>
+          </div>
+          <div>
+            <p className="mb-2 text-[10px] font-medium uppercase tracking-[0.18em] text-muted">
+              Preferences
+            </p>
+            <p className="text-sm text-faint">None until compile</p>
+          </div>
+        </div>
       ) : null}
 
       {contract && hard ? (

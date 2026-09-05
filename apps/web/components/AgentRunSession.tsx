@@ -9,6 +9,7 @@ import { Eyebrow } from "@/components/Eyebrow";
 import { FailureInject, InjectChip } from "@/components/FailureInject";
 import { ManualProposalForm } from "@/components/ManualProposalForm";
 import { PrimaryButton } from "@/components/PrimaryButton";
+import { Skeleton } from "@/components/Skeleton";
 import {
   ApiError,
   getActivity,
@@ -103,12 +104,28 @@ export function AgentRunSession({ intentId }: AgentRunSessionProps) {
 
   if (!record && !error) {
     return (
-      <div className="grid grid-cols-1 gap-8 md:grid-cols-[2fr_1fr]">
-        <div className="flex flex-col gap-4">
-          <div className="h-10 w-48 rounded-lg bg-raised" />
-          <div className="h-16 w-full max-w-md rounded-lg bg-raised" />
-        </div>
-        <div className="h-64 rounded-[1.75rem] bg-raised" />
+      <div className="grid grid-cols-1 gap-8 md:grid-cols-[2fr_1fr] md:gap-10">
+        <section className="flex flex-col gap-6">
+          <div className="flex flex-col gap-3">
+            <Skeleton className="h-3 w-36" />
+            <Skeleton className="h-12 w-full max-w-md" />
+            <Skeleton className="h-16 w-full max-w-lg" />
+          </div>
+          <Skeleton className="h-12 w-44 rounded-full" />
+          <div className="flex flex-col gap-4 border-l border-hairline pl-5">
+            <Skeleton className="h-10 w-64" />
+            <Skeleton className="h-10 w-52" />
+            <Skeleton className="h-10 w-56" />
+          </div>
+        </section>
+        <Bezel>
+          <div className="flex flex-col gap-5 p-6 md:p-8">
+            <Skeleton className="h-3 w-40" />
+            <Skeleton className="h-14 w-40" />
+            <Skeleton className="h-5 w-48" />
+            <Skeleton className="h-4 w-32" />
+          </div>
+        </Bezel>
       </div>
     );
   }
@@ -159,7 +176,7 @@ export function AgentRunSession({ intentId }: AgentRunSessionProps) {
                 >
                   <span
                     className={`absolute -left-[1.45rem] top-5 flex h-3 w-3 items-center justify-center rounded-full ${
-                      current ? "bg-teal animate-pulse" : "bg-teal"
+                      current ? "bg-teal motion-safe:animate-pulse" : "bg-teal"
                     }`}
                   >
                     {current ? null : <Check size={8} weight="bold" className="text-ink" />}
@@ -190,13 +207,30 @@ export function AgentRunSession({ intentId }: AgentRunSessionProps) {
                   </li>
                 ))
             ) : null}
-            {!result && !running && !agentFailed ? (
-              <li className="py-3">
-                <p className="text-sm leading-relaxed text-muted">
-                  Activity appears here after you run the agent.
+            {running && shown.length === 0 ? (
+              <li className="relative py-3">
+                <span className="absolute -left-[1.45rem] top-5 h-3 w-3 rounded-full bg-teal motion-safe:animate-pulse" />
+                <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-faint">
+                  search catalog
                 </p>
+                <p className="text-sm leading-relaxed text-ink">Searching the demo catalog</p>
               </li>
             ) : null}
+            {!result && !running && !agentFailed
+              ? [
+                  { tool: "search catalog", detail: "Waiting to search the catalog" },
+                  { tool: "compare", detail: "Waiting to compare matches" },
+                  { tool: "propose", detail: "Waiting to propose a purchase" },
+                ].map((step) => (
+                  <li key={step.tool} className="relative py-3">
+                    <span className="absolute -left-[1.45rem] top-5 h-3 w-3 rounded-full bg-faint/40" />
+                    <p className="text-[11px] font-medium uppercase tracking-[0.16em] text-faint">
+                      {step.tool}
+                    </p>
+                    <p className="text-sm leading-relaxed text-faint">{step.detail}</p>
+                  </li>
+                ))
+              : null}
           </ol>
         </section>
         <Bezel>
@@ -219,11 +253,30 @@ export function AgentRunSession({ intentId }: AgentRunSessionProps) {
                 </p>
               </>
             ) : (
+              <div className="flex flex-col gap-5">
+                <p className="font-mono text-[clamp(2rem,4vw,3rem)] leading-none tracking-tight text-faint">
+                  —
+                </p>
+                <dl className="divide-y divide-hairline">
+                  <div className="grid grid-cols-[6.5rem_1fr] gap-3 py-2">
+                    <dt className="text-[10px] font-medium uppercase tracking-[0.18em] text-muted">
+                      Merchant
+                    </dt>
+                    <dd className="font-mono text-sm tracking-[0.04em] text-faint">—</dd>
+                  </div>
+                  <div className="grid grid-cols-[6.5rem_1fr] gap-3 py-2">
+                    <dt className="text-[10px] font-medium uppercase tracking-[0.18em] text-muted">
+                      SKU
+                    </dt>
+                    <dd className="font-mono text-sm tracking-[0.04em] text-faint">—</dd>
+                  </div>
+                </dl>
                 <p className="max-w-[65ch] text-sm leading-relaxed text-muted">
-                {agentFailed
-                  ? "The agent did not propose a purchase. Payment was not initiated."
-                  : "SKU, amount, and merchant appear when the agent proposes."}
-              </p>
+                  {agentFailed
+                    ? "The agent did not propose a purchase. Payment was not initiated."
+                    : "Run the agent to fill amount, merchant, and SKU. Payment stays grant-gated."}
+                </p>
+              </div>
             )}
           </div>
         </Bezel>
@@ -260,7 +313,7 @@ export function AgentRunSession({ intentId }: AgentRunSessionProps) {
         <button
           type="button"
           onClick={() => setShowManual((open) => !open)}
-          className="min-h-11 text-sm text-muted underline decoration-hairline underline-offset-4 hover:text-ink"
+          className="min-h-11 cursor-pointer text-sm text-muted underline decoration-hairline underline-offset-4 transition-colors duration-200 ease-intent hover:text-ink"
         >
           {showManual ? "Hide manual proposal" : "Manual proposal"}
         </button>

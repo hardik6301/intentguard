@@ -15,7 +15,7 @@ export function FailureInject({ children }: FailureInjectProps) {
       <button
         type="button"
         onClick={() => setOpen((value) => !value)}
-        className="min-h-11 w-fit text-sm text-muted underline decoration-hairline underline-offset-4 hover:text-ink"
+        className="min-h-11 w-fit cursor-pointer text-sm text-muted underline decoration-hairline underline-offset-4 transition-colors duration-200 ease-intent hover:text-ink"
       >
         {open ? "Hide failure injection" : "Failure injection"}
       </button>
@@ -39,7 +39,7 @@ export function InjectChip({
     <button
       type="button"
       onClick={onClick}
-      className={`inline-flex min-h-11 items-center rounded-full border px-4 text-sm transition-transform duration-500 ease-intent active:scale-[0.98] ${
+      className={`inline-flex min-h-11 cursor-pointer items-center rounded-full border px-4 text-sm transition-[color,background-color,transform] duration-200 ease-intent active:scale-[0.98] ${
         active
           ? "border-teal/50 bg-teal/15 text-teal"
           : "border-hairline text-muted hover:text-ink"
