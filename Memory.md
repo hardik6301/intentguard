@@ -4,7 +4,7 @@ Living log of what actually exists. Do not treat planned phases as done.
 
 ## Current phase
 
-Phase 10 complete. Foundation phases 0–10 are shipped.
+Phase 11 complete. Judge surface shipped on top of phases 0–10.
 
 ## What shipped (Phase 0)
 
@@ -98,6 +98,16 @@ Phase 10 complete. Foundation phases 0–10 are shipped.
 - Empty Decision copy points at Run. Compile fail still asks for a numeric budget.
 - Manual proposal can add a ₹10,000 accessory line for the upsell demo.
 - `docs/DEMO.md` walks all eight PRD scenarios against the real API: approve, budget, vegetarian/chicken, direct/one-stop, Bose pause, accessory upsell, poison injection, timeout reconcile.
+
+## What shipped (Phase 11)
+
+- `/eval` dashboard: Unsafe Approval Rate as the hero numeral, engine metrics in a bezel, mismatches, labeled case spine.
+- `POST /v1/eval/run` returns UAR, mismatches, and cases. Note states this is policy-engine UAR on stubbed scores.
+- `GET /v1/eval/runtime` reports compiler/semantic source, payment provider, SQLite vs Postgres.
+- Decision stamp line shows `assessment Gemini` or `assessment local heuristic`.
+- GitHub Actions: Python 3.12, pytest, `evaluation.runner` (fails if UAR > 0).
+- README is the submission surface. `docs/PITCH.md` is the three-scene, five-minute script.
+- UI polish from the design pass: secondary Confirm, truncated session id, structured empty wells, `prefers-reduced-motion`.
 
 ## How to run
 

@@ -261,3 +261,4 @@ Leave this table empty until work starts. Coding agents copy rows into `Memory.m
 | 8 | complete | 2026-09-04 | Demo flags for JSON fail, low semantic, poison, timeout |
 | 9 | complete | 2026-09-04 | 52 scenarios; UAR printed first; ceiling 0 |
 | 10 | complete | 2026-09-04 | Design pass, DEMO.md, eight live walkthroughs |
+| 11 | complete | 2026-09-05 | Eval dashboard, CI, submission README, five-minute pitch |
