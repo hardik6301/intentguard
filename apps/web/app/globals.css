@@ -1,0 +1,78 @@
+@import "tailwindcss";
+
+:root {
+  --void-canvas: #101114;
+  --panel-steel: #18191e;
+  --raised-iron: #1f2026;
+  --hairline: rgba(255, 255, 255, 0.08);
+  --primary-ink: #e8e9ed;
+  --muted-telemetry: #8b8e99;
+  --faint-meta: #5c5f6a;
+  --signal-teal: #3f8f7a;
+  --verdict-approve: #4a9b73;
+  --verdict-pause: #c4a15a;
+  --verdict-block: #c45c4a;
+  --ease-intent: cubic-bezier(0.32, 0.72, 0, 1);
+}
+
+@theme inline {
+  --color-canvas: var(--void-canvas);
+  --color-panel: var(--panel-steel);
+  --color-raised: var(--raised-iron);
+  --color-hairline: var(--hairline);
+  --color-ink: var(--primary-ink);
+  --color-muted: var(--muted-telemetry);
+  --color-faint: var(--faint-meta);
+  --color-teal: var(--signal-teal);
+  --color-approve: var(--verdict-approve);
+  --color-pause: var(--verdict-pause);
+  --color-block: var(--verdict-block);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --ease-intent: var(--ease-intent);
+}
+
+html {
+  background: var(--void-canvas);
+  color: var(--primary-ink);
+}
+
+body {
+  min-height: 100dvh;
+  background: var(--void-canvas);
+  color: var(--primary-ink);
+  font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+}
+
+::selection {
+  background: color-mix(in srgb, var(--signal-teal) 40%, transparent);
+  color: var(--primary-ink);
+}
+
+@keyframes fade-up {
+  from {
+    opacity: 0;
+    transform: translateY(0.75rem);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-up {
+  animation: fade-up 500ms var(--ease-intent) both;
+}
+
+@keyframes shimmer {
+  from {
+    opacity: 0.35;
+  }
+  to {
+    opacity: 0.72;
+  }
+}
+
+.animate-shimmer {
+  animation: shimmer 1.2s var(--ease-intent) infinite alternate;
+}
