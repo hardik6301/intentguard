@@ -1,0 +1,2 @@
+class GeminiNotConfigured(RuntimeError):
+    pass
