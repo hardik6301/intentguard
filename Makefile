@@ -1,7 +1,13 @@
 .PHONY: eval test
 
+ifneq ($(wildcard .venv/bin/python),)
+PYTHON ?= .venv/bin/python
+else
+PYTHON ?= python3
+endif
+
 eval:
-	PYTHONPATH=. .venv/bin/python -m evaluation.runner
+	PYTHONPATH=. $(PYTHON) -m evaluation.runner
 
 test:
-	PYTHONPATH=. .venv/bin/pytest
+	PYTHONPATH=. $(PYTHON) -m pytest tests evaluation/test_harness.py
