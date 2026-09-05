@@ -354,3 +354,65 @@ export async function getAudit(intentId: string): Promise<AuditEvent[]> {
   }
   return z.array(auditEventSchema).parse(await response.json());
 }
+
+const runtimeSchema = z.object({
+  compiler: z.string(),
+  semantic: z.string(),
+  payment_provider: z.string(),
+  policy_version: z.string(),
+  database: z.string(),
+  eval_mode: z.string().optional(),
+  note: z.string().optional(),
+});
+
+export type RuntimeInfo = z.infer<typeof runtimeSchema>;
+
+export async function getRuntime(): Promise<RuntimeInfo> {
+  const response = await fetch(apiUrl("/v1/eval/runtime"), { cache: "no-store" });
+  if (!response.ok) {
+    throw await readError(response);
+  }
+  return runtimeSchema.parse(await response.json());
+}
+
+const evalCaseSchema = z.object({
+  id: z.string(),
+  expected: z.string(),
+  actual: z.string(),
+  tags: z.array(z.string()),
+  latency_ms: z.number(),
+  match: z.boolean(),
+  hard_passed: z.boolean(),
+  unsafe_approval: z.boolean(),
+});
+
+const evalReportSchema = z.object({
+  status: z.string(),
+  mode: z.string(),
+  unsafe_approval_rate: z.number(),
+  unsafe_approvals: z.number(),
+  expected_blocks: z.number(),
+  accuracy: z.number(),
+  false_approvals: z.number(),
+  false_blocks: z.number(),
+  violation_precision: z.number(),
+  violation_recall: z.number(),
+  average_latency_ms: z.number(),
+  total: z.number(),
+  mismatches: z.array(evalCaseSchema),
+  cases: z.array(evalCaseSchema),
+  note: z.string().optional(),
+});
+
+export type EvalReport = z.infer<typeof evalReportSchema>;
+
+export async function runEvalSuite(): Promise<EvalReport> {
+  const response = await fetch(apiUrl("/v1/eval/run"), {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+  });
+  if (!response.ok) {
+    throw await readError(response);
+  }
+  return evalReportSchema.parse(await response.json());
+}

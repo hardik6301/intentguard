@@ -8,7 +8,7 @@ import { Eyebrow } from "@/components/Eyebrow";
 import { PauseResolve } from "@/components/PauseResolve";
 import { PaymentPanel } from "@/components/PaymentPanel";
 import { Skeleton } from "@/components/Skeleton";
-import { getLatestDecision, type ProposalEvaluation } from "@/lib/api";
+import { getLatestDecision, getRuntime, type ProposalEvaluation, type RuntimeInfo } from "@/lib/api";
 
 function rupees(amount: number): string {
   return `₹${amount.toLocaleString("en-IN")}`;
@@ -33,6 +33,7 @@ type DecisionHeroProps = {
 export function DecisionHero({ intentId }: DecisionHeroProps) {
   const [record, setRecord] = useState<ProposalEvaluation | null | undefined>(undefined);
   const [error, setError] = useState<string | null>(null);
+  const [runtime, setRuntime] = useState<RuntimeInfo | null>(null);
 
   useEffect(() => {
     let cancelled = false;
@@ -45,6 +46,17 @@ export function DecisionHero({ intentId }: DecisionHeroProps) {
       .catch(() => {
         if (!cancelled) {
           setError("Decision could not be loaded.");
+        }
+      });
+    getRuntime()
+      .then((value) => {
+        if (!cancelled) {
+          setRuntime(value);
+        }
+      })
+      .catch(() => {
+        if (!cancelled) {
+          setRuntime(null);
         }
       });
     return () => {
@@ -181,6 +193,9 @@ export function DecisionHero({ intentId }: DecisionHeroProps) {
             </p>
             <p className="mt-3 font-mono text-[11px] tracking-[0.04em] text-faint">
               {record.decision.policy_version}
+              {runtime
+                ? ` · assessment ${runtime.semantic === "gemini" ? "Gemini" : "local heuristic"}`
+                : ""}
             </p>
           </div>
         </div>
